@@ -1,40 +1,23 @@
 <?php
 	
-	add_theme_support('title-tag');
-	add_theme_support('post-thumbnails', array('page','post','stages','cours','single'));
-	if (function_exists('add_image_size')) {
-		add_image_size('thumb_page_mobile',300,300,true);
-		add_image_size('thumb_page_cours',435,542,true);
-		add_image_size('photo_content_cours',440,240,true);
-		add_image_size('tenue_content_cours',592,216,true);
-		add_image_size('cours_similaires',220,352,true);
-		add_image_size('thumb_vignette',400,292,true);
-		add_image_size('thumb_categorie',1120,361,true);
-	}
-	add_post_type_support('page','excerpt');
+	add_theme_support( 'post-thumbnails', array('page','post','stages','cours','single') );
+	if ( function_exists( 'add_image_size' ) ) {
+		add_image_size( 'thumb_page_mobile', 300, 300, true );
+		add_image_size( 'thumb_page_cours', 435, 542, true );
+		add_image_size( 'photo_content_cours', 440, 240, true );
+		add_image_size( 'tenue_content_cours', 592, 216, true );
+		add_image_size( 'cours_similaires', 220, 352, true );
+		add_image_size( 'thumb_vignette', 400, 292, true );
+		add_image_size( 'thumb_categorie', 1120, 361, true );
+	};
+
+	add_post_type_support( 'page', 'excerpt' );
+	
 	register_nav_menus(array(
-		'primary'=>'Menu principal',
-		'contact_footerV6'=>'Contact footer'
-	));
-
-	function e2d_enqueue_assets() {
-		$ver = wp_get_theme()->get('Version');
-		wp_enqueue_style('e2d-theme', get_stylesheet_uri(), [], $ver);
-		wp_enqueue_style('e2d-fonts', 'https://fonts.googleapis.com/css?family=Poppins:500,700&display=swap', [], null);
-		wp_enqueue_script('jquery');
-		wp_enqueue_script('anime', get_template_directory_uri().'/anime.js', [], $ver, true);
-		wp_enqueue_script('sparkles2', get_template_directory_uri().'/sparkles2.js', ['anime'], $ver, true);
-	}
-	add_action('wp_enqueue_scripts','e2d_enqueue_assets');
-
-	function e2d_resource_hints($urls,$relation_type){
-		if('preconnect'===$relation_type){
-			$urls[]=['href'=>'https://fonts.googleapis.com','crossorigin'=>true];
-			$urls[]=['href'=>'https://fonts.gstatic.com','crossorigin'=>true];
-		}
-		return $urls;
-	}
-	add_filter('wp_resource_hints','e2d_resource_hints',10,2);
+		'menuV6' => 'Menu_V6',
+		'lien_footerV6' => 'Footer_V6',
+		'contact_footerV6' => 'Contact_Footer_V6',
+	));	
 
 	///
 	/// Custom post
