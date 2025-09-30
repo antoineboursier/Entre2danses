@@ -1,0 +1,55 @@
+
+articles
+
+Page categorie (cours+ Stages=)
+
+Page prof (utilisateur ?)
+
+Paillettes sur les pages, sur stages
+
+COntact
+
+Tarif
+
+Home
+
+Vérifier design des breadcrumbs partout
+
+SUpprimer les aria hidden si alt=""
+
+THe content , thumbnail, définir taille par défaut ?
+
+Bouton liste d'attente à activer en cours complet
+
+Activer plugin webp
+
+Liste de diffusion ?
+
+
+Bonjour, Antoine ? (identifer sa connexion)
+
+Attention aux videos du site
+
+D�sactiver les commentaires au mieux
+
+SUppriemr les liens (de wordpress)
+
+Verifier liens morts
+
+Revoir toutes les pages pour structure header (H1 > H2...) et éléments spécifiques
+
+Supprimer dans les contenus les soulignements
+
+Cas cours complet, en fiche et en card sur page, sur stage aussi
+
+Pour les cours, ajouter une galerie
+
+________________________________________ En ligne
+
+
+Arranger le back office, supprimer non utilis�
+
+Ajouter photos sur my business, v�rifier les autres comptes
+
+_________________________________________
+
