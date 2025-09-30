@@ -181,11 +181,7 @@
             <?php $details_du_cours = get_field('details_du_cours'); ?>
             <?php if (isset($details_du_cours['photo_du_cours'])) : ?>
             <?php $photo_du_cours_id = $details_du_cours['photo_du_cours']; ?>
-            <?php if ($photo_du_cours_id) : ?>
-            <?php $photo_du_cours_url = wp_get_attachment_image_src($photo_du_cours_id, 'photo_content_cours'); ?>
-            <?php if ($photo_du_cours_url) : ?>
-            <img src="<?php echo esc_url($photo_du_cours_url[0]); ?>" alt="Photo du cours" />
-            <?php endif; ?>
+            <?php if ($photo_du_cours_id) : echo wp_get_attachment_image($photo_du_cours_id, 'photo_content_cours', false, array('alt' => '')); ?>
             <?php endif; ?>
             <?php endif; ?>
             <?php if (isset($details_du_cours['apprentissage'])) : ?>
@@ -241,16 +237,12 @@
                 <p><?php the_sub_field('tenue'); ?></p>
             </div>
             <?php $photo_du_cours_id = get_sub_field('photo_tenue'); ?>
-            <?php if ($photo_du_cours_id) : ?>
-            <?php $photo_du_cours_url = wp_get_attachment_image_src($photo_du_cours_id, 'tenue_content_cours'); ?>
-            <?php if ($photo_du_cours_url) : ?>
-            <img src="<?php echo esc_url($photo_du_cours_url[0]); ?>" alt="" aria-hidden="true" />
-            <img src="<?php echo esc_url($photo_du_cours_url[0]); ?>" alt="Exemple de tenue pour le cours." />
-            <?php endif; ?>
+            <?php if ($photo_du_cours_id) : 
+                echo wp_get_attachment_image($photo_du_cours_id, 'tenue_content_cours', false, array('alt' => ''));
+            ?>
             <?php else : ?>
             <img src="<?php echo esc_url(get_template_directory_uri() . '/imgs/tenue-danse.jpg'); ?>"
-                id="tenue-defaut-img" alt="" aria-hidden="true" />
-            id="tenue-defaut-img" alt="Tenue de danse générique." />
+                id="tenue-defaut-img" alt="" />
             <?php endif; ?>
             <?php endwhile; ?>
             <?php endif; ?>
