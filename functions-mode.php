@@ -19,6 +19,9 @@ add_action('admin_menu', 'ajouter_menu_mode');
 function afficher_page_mode() {
     // Vérifier si le formulaire a été soumis
     if (isset($_POST['submit'])) {
+        // Vérifier le nonce pour la sécurité
+        check_admin_referer('e2d_mode_options');
+
         // Enregistrer les options dans la base de données
         update_option('afficher_bouton_essai', isset($_POST['afficher_bouton_essai']));
         update_option('texte_bouton_essai', sanitize_text_field($_POST['texte_bouton_essai']));
@@ -29,10 +32,10 @@ function afficher_page_mode() {
         update_option('desactiver_bouton_inscription', isset($_POST['desactiver_bouton_inscription']));
         update_option('url_liste_attente', sanitize_text_field($_POST['url_liste_attente'])); // Sauvegarder le champ d'URL
         ?>
-        <div class="notice notice-success is-dismissible">
-            <p>Les options ont été enregistrées avec succès.</p>
-        </div>
-        <?php
+<div class="notice notice-success is-dismissible">
+    <p>Les options ont été enregistrées avec succès.</p>
+</div>
+<?php
     }
 
     // Récupérer les options enregistrées
@@ -45,91 +48,101 @@ function afficher_page_mode() {
     $desactiver_bouton_inscription = get_option('desactiver_bouton_inscription', false);
     $url_liste_attente = get_option('url_liste_attente', '');
     ?>
-    <div class="wrap">
-        <h1>Réglages des boutons du site</h1>
-        <hr style="border: none; border-top: 1px solid #ccc; margin: 32px 0;">
-        <form method="post" action="">
-            <h2>Essai</h2>
-            <table class="form-table">
-                <tr>
-                    <th scope="row">
-                        <label for="afficher_bouton_essai">Afficher le bouton d'essai</label>
-                        <p style="font-weight:normal;font-size:13px;opacity:80%;">Uniquement pour les cours</p>
-                    </th>
-                    <td>
-                        <input type="checkbox" name="afficher_bouton_essai" id="afficher_bouton_essai" <?php checked($afficher_bouton_essai, true); ?> />
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <label for="texte_bouton_essai">Texte du bouton d'essai</label>
-                    </th>
-                    <td style="width: 20%;">
-                        <input type="text" name="texte_bouton_essai" id="texte_bouton_essai" value="<?php echo esc_attr($texte_bouton_essai); ?>" />
-                    </td>
-                    <th scope="row">
-                        <label for="url_bouton_essai">URL du bouton d'essai</label>
-                    </th>
-                    <td>
-                        <input type="text" name="url_bouton_essai" id="url_bouton_essai" value="<?php echo esc_attr($url_bouton_essai); ?>" />
-                    </td>
-                </tr>
-            </table>
+<div class="wrap">
+    <h1>Réglages des boutons du site</h1>
+    <hr style="border: none; border-top: 1px solid #ccc; margin: 32px 0;">
+    <form method="post" action="">
+        <?php wp_nonce_field('e2d_mode_options'); ?>
+        <h2>Essai</h2>
+        <table class="form-table">
+            <tr>
+                <th scope="row">
+                    <label for="afficher_bouton_essai">Afficher le bouton d'essai</label>
+                    <p style="font-weight:normal;font-size:13px;opacity:80%;">Uniquement pour les cours</p>
+                </th>
+                <td>
+                    <input type="checkbox" name="afficher_bouton_essai" id="afficher_bouton_essai"
+                        <?php checked($afficher_bouton_essai, true); ?> />
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <label for="texte_bouton_essai">Texte du bouton d'essai</label>
+                </th>
+                <td style="width: 20%;">
+                    <input type="text" name="texte_bouton_essai" id="texte_bouton_essai"
+                        value="<?php echo esc_attr($texte_bouton_essai); ?>" />
+                </td>
+                <th scope="row">
+                    <label for="url_bouton_essai">URL du bouton d'essai</label>
+                </th>
+                <td>
+                    <input type="text" name="url_bouton_essai" id="url_bouton_essai"
+                        value="<?php echo esc_attr($url_bouton_essai); ?>" />
+                </td>
+            </tr>
+        </table>
 
-            <h2 style="margin-top:40px;">Inscription</h2>
-            <table class="form-table">
-                <tr>
-                    <th scope="row">
-                        <label for="afficher_bouton_inscription">Afficher le bouton d'inscription</label>
-                    </th>
-                    <td>
-                        <input type="checkbox" name="afficher_bouton_inscription" id="afficher_bouton_inscription" <?php checked($afficher_bouton_inscription, true); ?> />
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <label for="texte_bouton_inscription">Texte du bouton d'inscription</label>
-                    </th>
-                    <td style="width: 20%;">
-                        <input type="text" name="texte_bouton_inscription" id="texte_bouton_inscription" value="<?php echo esc_attr($texte_bouton_inscription); ?>" />
-                    </td>
-                    <th scope="row">
-                        <label for="url_bouton_inscription">URL du bouton d'inscription</label>
-                    </th>
-                    <td>
-                        <input type="text" name="url_bouton_inscription" id="url_bouton_inscription" value="<?php echo esc_attr($url_bouton_inscription); ?>" />
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <label for="desactiver_bouton_inscription">Afficher mais désactiver</label>
-                        <p style="font-weight:normal;font-size:13px;opacity:80%;">Visible, mais grisé et inutilisable (ex: avant l'ouverture)</p>
-                    </th>
-                    <td style="vertical-align:top; padding-top:21px;">
-                        <input type="checkbox" name="desactiver_bouton_inscription" id="desactiver_bouton_inscription" <?php checked($desactiver_bouton_inscription, true); ?> />
-                    </td>
-                </tr>
-            </table>
+        <h2 style="margin-top:40px;">Inscription</h2>
+        <table class="form-table">
+            <tr>
+                <th scope="row">
+                    <label for="afficher_bouton_inscription">Afficher le bouton d'inscription</label>
+                </th>
+                <td>
+                    <input type="checkbox" name="afficher_bouton_inscription" id="afficher_bouton_inscription"
+                        <?php checked($afficher_bouton_inscription, true); ?> />
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <label for="texte_bouton_inscription">Texte du bouton d'inscription</label>
+                </th>
+                <td style="width: 20%;">
+                    <input type="text" name="texte_bouton_inscription" id="texte_bouton_inscription"
+                        value="<?php echo esc_attr($texte_bouton_inscription); ?>" />
+                </td>
+                <th scope="row">
+                    <label for="url_bouton_inscription">URL du bouton d'inscription</label>
+                </th>
+                <td>
+                    <input type="text" name="url_bouton_inscription" id="url_bouton_inscription"
+                        value="<?php echo esc_attr($url_bouton_inscription); ?>" />
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <label for="desactiver_bouton_inscription">Afficher mais désactiver</label>
+                    <p style="font-weight:normal;font-size:13px;opacity:80%;">Visible, mais grisé et inutilisable (ex:
+                        avant l'ouverture)</p>
+                </th>
+                <td style="vertical-align:top; padding-top:21px;">
+                    <input type="checkbox" name="desactiver_bouton_inscription" id="desactiver_bouton_inscription"
+                        <?php checked($desactiver_bouton_inscription, true); ?> />
+                </td>
+            </tr>
+        </table>
 
-            <hr style="border: none; border-top: 1px solid #ccc; margin: 0px 0 32px;">
+        <hr style="border: none; border-top: 1px solid #ccc; margin: 0px 0 32px;">
 
-            <h2>Lien vers la liste d'attente</h2>
-            <p>Apparaît quand les cours sont complets</p>
-            <table class="form-table">
-                <tr>
-                    <th scope="row">
-                        <label for="url_liste_attente">URL de la liste d'attente</label>
-                    </th>
-                    <td>
-                        <input type="text" name="url_liste_attente" id="url_liste_attente" value="<?php echo esc_attr($url_liste_attente); ?>" />
-                    </td>
-                </tr>
-            </table>
+        <h2>Lien vers la liste d'attente</h2>
+        <p>Apparaît quand les cours sont complets</p>
+        <table class="form-table">
+            <tr>
+                <th scope="row">
+                    <label for="url_liste_attente">URL de la liste d'attente</label>
+                </th>
+                <td>
+                    <input type="text" name="url_liste_attente" id="url_liste_attente"
+                        value="<?php echo esc_attr($url_liste_attente); ?>" />
+                </td>
+            </tr>
+        </table>
 
-            <p class="submit">
-                <input type="submit" name="submit" class="button-primary" value="Enregistrer les options" />
-            </p>
-        </form>
-    </div>
-    <?php
+        <p class="submit">
+            <input type="submit" name="submit" class="button-primary" value="Enregistrer les options" />
+        </p>
+    </form>
+</div>
+<?php
 }

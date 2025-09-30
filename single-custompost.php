@@ -59,7 +59,7 @@
             <div class="infos_cours">
                 <div id="jour" class="info">
                     <img id="ico_calendar" aria-hidden="true"
-                        src="<?php bloginfo('template_url'); ?>/imgs/calendar.svg" />
+                        src="<?php echo esc_url(get_template_directory_uri()); ?>/imgs/calendar.svg" />
                     <div class="text-column">
                         <?php if (is_singular('cours')) : ?>
                         <?php if( get_field( 'jour_de_cours' ) ): echo "<p class='day'>"; the_field('jour_de_cours'); echo "</p>"; endif; ?>
@@ -118,7 +118,8 @@
                 </div>
                 <?php endif; ?>
                 <div id="lieu" class="info">
-                    <img id="ico_map" aria-hidden="true" src="<?php bloginfo('template_url'); ?>/imgs/map.svg" />
+                    <img id="ico_map" aria-hidden="true"
+                        src="<?php echo esc_url(get_template_directory_uri()); ?>/imgs/map.svg" />
                     <div class="text-column">
                         <?php $lieu = get_field('lieu_txt');
                                 if ($lieu === 'odeya') {
@@ -129,7 +130,7 @@
                 </div>
                 <div id="price" class="info">
                     <img id="ico_bank" aria-hidden="true"
-                        src="<?php bloginfo('template_url'); ?>/imgs/piggy-bank.svg" />
+                        src="<?php echo esc_url(get_template_directory_uri()); ?>/imgs/piggy-bank.svg" />
                     <div class="text-column">
                         <?php if( get_field( 'tarif_cours' ) ): echo '<p class="tarif">'; the_field('tarif_cours'); echo '€</p>' ; echo '<p class="tarif_asso reduce">dont 5€ d’adhésion (obligatoire pour assurer l’élève)</p>'; endif; ?>
                         <?php if( get_field( 'tarif_1' ) ): echo '<p class="tarif">'; the_field('tarif_1'); echo '</p>' ; endif; ?>
@@ -139,7 +140,7 @@
                 </div>
                 <div id="supp" class="info">
                     <img id="ico_thumb" aria-hidden="true"
-                        src="<?php bloginfo('template_url'); ?>/imgs/thumbs-up.svg" />
+                        src="<?php echo esc_url(get_template_directory_uri()); ?>/imgs/thumbs-up.svg" />
                     <div class="text-column">
                         <p class="info_comp">Prévoir une tenue et chaussures adaptées au cours</p>
                     </div>
@@ -244,10 +245,12 @@
             <?php $photo_du_cours_url = wp_get_attachment_image_src($photo_du_cours_id, 'tenue_content_cours'); ?>
             <?php if ($photo_du_cours_url) : ?>
             <img src="<?php echo esc_url($photo_du_cours_url[0]); ?>" alt="" aria-hidden="true" />
+            <img src="<?php echo esc_url($photo_du_cours_url[0]); ?>" alt="Exemple de tenue pour le cours." />
             <?php endif; ?>
             <?php else : ?>
             <img src="<?php echo esc_url(get_template_directory_uri() . '/imgs/tenue-danse.jpg'); ?>"
                 id="tenue-defaut-img" alt="" aria-hidden="true" />
+            id="tenue-defaut-img" alt="Tenue de danse générique." />
             <?php endif; ?>
             <?php endwhile; ?>
             <?php endif; ?>

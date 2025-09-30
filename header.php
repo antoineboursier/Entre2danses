@@ -2,37 +2,34 @@
 
 <html <?php language_attributes(); ?>>
 
-<head>	
-	<title><?php echo get_bloginfo(); ?></title>
-	<meta charset="UTF-8">
-	<meta name="viewport" content="width=device-width, initial-scale = 1.0, maximum-scale=1.0, user-scalable=no" /> 
-	<link rel="dns-prefetch" href="//s.w.org">
-	<link href="https://fonts.googleapis.com/css?family=Poppins:500,700">
-	<link href="<?php bloginfo('stylesheet_url'); ?>" rel="stylesheet"> 
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script src="<?php bloginfo('template_url'); ?>/sparkles2.js"></script>
-	<script src="<?php bloginfo('template_url'); ?>/anime.js"></script>
-	
+<head>
+    <meta charset="<?php bloginfo( 'charset' ); ?>">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <?php wp_head(); ?>
 </head>
 
-<body <?php body_class();?> >
+<body <?php body_class();?>>
 
-	<div id="quicklink" title="Menu d'accessibilité" class="skip-link">
-		<a href="#menu">Accéder au menu</a>
+    <?php wp_body_open(); ?>
+
+    <div id="quicklink" title="Menu d'accessibilité" class="skip-link">
+        <a href="#menu">Accéder au menu</a>
         <a href="#main">Aller au contenu</a>
         <a href="#contact_footer_menu">Contact</a>
     </div>
 
-	<header class="header">
+    <header class="header">
 
-		<nav id="menu_nav_container">
+        <nav id="menu_nav_container">
 
-			<a href="<?php bloginfo('url'); ?>" class="logo"><img src="<?php bloginfo('template_url'); ?>/imgs/Logo Entre2danses.svg" alt="logo entre2danses"/></a>
-			<input class="menu-btn" type="checkbox" id="menu-btn" />
-			<label class="menu-icon" for="menu-btn">
-				<span class="navicon"></span>
-			</label>
-			<?php
+            <a href="<?php echo esc_url(home_url('/')); ?>" class="logo"><img
+                    src="<?php echo esc_url(get_template_directory_uri()); ?>/imgs/Logo Entre2danses.svg"
+                    alt="logo entre2danses" /></a>
+            <input class="menu-btn" type="checkbox" id="menu-btn" />
+            <label class="menu-icon" for="menu-btn">
+                <span class="navicon"></span>
+            </label>
+            <?php
 				$menu_location = 'menuV6';
 				if (has_nav_menu($menu_location)) {
 					$menu_args = array(
@@ -45,13 +42,13 @@
 					wp_nav_menu($menu_args);
 				}
 			?>
-		</nav>
+        </nav>
 
-	</header>
+    </header>
 
-	<main <?php body_class();?> >
+    <main <?php body_class();?>>
 
-	<?php
+        <?php
 // Mode message
 if (get_option('message_site_actif', false)) :
 	$message_site_titre = get_option('message_site_titre', '');
@@ -68,16 +65,12 @@ if (get_option('message_site_actif', false)) :
 		$interface_class = '';
 	}
 	?>
-	<a id="message_alert" title="Infomation importante : <?= esc_html($message_site_titre) ?>" class="<?= esc_attr($interface_class) ?>" href="<?= esc_url($message_site_lien) ?>">
-		<p>
-			<span id="mess_title"><?= esc_html($message_site_titre) ?></span>
-			<span id="mess_text"><?= esc_html($message_site_texte_court) ?></span>
-		</p>
-		<img src="<?php echo get_template_directory_uri() . '/imgs/ico_chevron.svg' ?>" alt="" aria-hidden="true" />
-	</a>
-<?php endif; ?>
-
-
-
-	
-
+        <a id="message_alert" title="Infomation importante : <?= esc_html($message_site_titre) ?>"
+            class="<?= esc_attr($interface_class) ?>" href="<?= esc_url($message_site_lien) ?>">
+            <p>
+                <span id="mess_title"><?= esc_html($message_site_titre) ?></span>
+                <span id="mess_text"><?= esc_html($message_site_texte_court) ?></span>
+            </p>
+            <img src="<?php echo get_template_directory_uri() . '/imgs/ico_chevron.svg' ?>" alt="" aria-hidden="true" />
+        </a>
+        <?php endif; ?>

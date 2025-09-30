@@ -17,6 +17,9 @@ add_action('admin_menu', 'ajouter_menu_push_site');
 function afficher_page_push_site() {
     // Vérifier si le formulaire a été soumis
     if (isset($_POST['submit'])) {
+        // Vérifier le nonce pour la sécurité
+        check_admin_referer('e2d_push_site_options');
+
         // Enregistrer les options dans la base de données
         update_option('message_site_actif', isset($_POST['message_site_actif']));
         update_option('message_site_titre', sanitize_text_field($_POST['message_site_titre']));
@@ -24,10 +27,10 @@ function afficher_page_push_site() {
         update_option('message_site_lien', esc_url($_POST['message_site_lien']));
         update_option('message_site_interface', $_POST['message_site_interface']); // Nouvelle option pour l'interface
         ?>
-        <div class="notice notice-success is-dismissible">
-            <p>Les options ont été enregistrées avec succès.</p>
-        </div>
-        <?php
+<div class="notice notice-success is-dismissible">
+    <p>Les options ont été enregistrées avec succès.</p>
+</div>
+<?php
     }
 
     // Récupérer les options enregistrées
@@ -37,70 +40,78 @@ function afficher_page_push_site() {
     $message_site_lien = get_option('message_site_lien', '');
     $message_site_interface = get_option('message_site_interface', 'classic'); // Valeur par défaut : classic
     ?>
-    <div class="wrap">
-        <h1>Push site</h1>
-        <hr style="border: none; border-top: 1px solid #ccc; margin: 32px 0;">
-        <form method="post" action="">
-            <h2>Mode message fort</h2>
-            <p style="font-weight:normal;font-size:13px;opacity:80%;">Place un message sur toutes les pages du site pour relayer une information importante (ex : Erreur blablabla... Inscription / Réinscriptions...)</p>
-            <table class="form-table">
-                <tr>
-                    <th scope="row">
-                        <label for="message_site_actif">Activer le message sur tout le site</label>
-                    </th>
-                    <td>
-                        <input type="checkbox" name="message_site_actif" id="message_site_actif" <?php checked($message_site_actif, true); ?>>
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <label for="message_site_titre">Titre du message</label>
-                    </th>
-                    <td>
-                        <input type="text" name="message_site_titre" id="message_site_titre" value="<?php echo esc_attr($message_site_titre); ?>">
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <label for="message_site_texte_court">Texte court du message</label>
-                    </th>
-                    <td>
-                        <input type="text" name="message_site_texte_court" id="message_site_texte_court" value="<?php echo esc_attr($message_site_texte_court); ?>">
-                    </td>
-                </tr>
-                <tr>
-                    <th scope="row">
-                        <label for="message_site_lien">Lien</label>
-                    </th>
-                    <td>
-                        <input type="url" name="message_site_lien" id="message_site_lien" value="<?php echo esc_url($message_site_lien); ?>">
-                    </td>
-                </tr>
-            
-                <tr>
-                    <th scope="row">
-                        <label for="message_site_interface">Choix de l'interface</label>
-                    </th>
-                    <td>
-                        <label>
-                            <input type="radio" name="message_site_interface" value="classic" <?php checked($message_site_interface, 'classic'); ?>>
-                            Classic
-                        </label>
-                        <br>
-                        <label>
-                            <input type="radio" name="message_site_interface" value="alerte" <?php checked($message_site_interface, 'alerte'); ?>>
-                            Alerte
-                        </label>
-                    </td>
-                </tr>
-            </table>
+<div class="wrap">
+    <h1>Push site</h1>
+    <hr style="border: none; border-top: 1px solid #ccc; margin: 32px 0;">
+    <form method="post" action="">
+        <?php wp_nonce_field('e2d_push_site_options'); ?>
+        <h2>Mode message fort</h2>
+        <p style="font-weight:normal;font-size:13px;opacity:80%;">Place un message sur toutes les pages du site pour
+            relayer une information importante (ex : Erreur blablabla... Inscription / Réinscriptions...)</p>
+        <table class="form-table">
+            <tr>
+                <th scope="row">
+                    <label for="message_site_actif">Activer le message sur tout le site</label>
+                </th>
+                <td>
+                    <input type="checkbox" name="message_site_actif" id="message_site_actif"
+                        <?php checked($message_site_actif, true); ?>>
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <label for="message_site_titre">Titre du message</label>
+                </th>
+                <td>
+                    <input type="text" name="message_site_titre" id="message_site_titre"
+                        value="<?php echo esc_attr($message_site_titre); ?>">
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <label for="message_site_texte_court">Texte court du message</label>
+                </th>
+                <td>
+                    <input type="text" name="message_site_texte_court" id="message_site_texte_court"
+                        value="<?php echo esc_attr($message_site_texte_court); ?>">
+                </td>
+            </tr>
+            <tr>
+                <th scope="row">
+                    <label for="message_site_lien">Lien</label>
+                </th>
+                <td>
+                    <input type="url" name="message_site_lien" id="message_site_lien"
+                        value="<?php echo esc_url($message_site_lien); ?>">
+                </td>
+            </tr>
 
-            <hr style="border: none; border-top: 1px solid #ccc; margin: 0px 0 32px;">
+            <tr>
+                <th scope="row">
+                    <label for="message_site_interface">Choix de l'interface</label>
+                </th>
+                <td>
+                    <label>
+                        <input type="radio" name="message_site_interface" value="classic"
+                            <?php checked($message_site_interface, 'classic'); ?>>
+                        Classic
+                    </label>
+                    <br>
+                    <label>
+                        <input type="radio" name="message_site_interface" value="alerte"
+                            <?php checked($message_site_interface, 'alerte'); ?>>
+                        Alerte
+                    </label>
+                </td>
+            </tr>
+        </table>
 
-            <p class="submit">
-                <input type="submit" name="submit" class="button-primary" value="Enregistrer les options">
-            </p>
-        </form>
-    </div>
-    <?php
+        <hr style="border: none; border-top: 1px solid #ccc; margin: 0px 0 32px;">
+
+        <p class="submit">
+            <input type="submit" name="submit" class="button-primary" value="Enregistrer les options">
+        </p>
+    </form>
+</div>
+<?php
 }

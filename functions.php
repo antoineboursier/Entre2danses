@@ -1,5 +1,10 @@
 <?php
 	
+	///
+	/// Configuration de base du thème
+	///
+
+	add_theme_support( 'title-tag' );
 	add_theme_support( 'post-thumbnails', array('page','post','stages','cours','single') );
 	if ( function_exists( 'add_image_size' ) ) {
 		add_image_size( 'thumb_page_mobile', 300, 300, true );
@@ -18,6 +23,36 @@
 		'lien_footerV6' => 'Footer_V6',
 		'contact_footerV6' => 'Contact_Footer_V6',
 	));	
+
+	///
+	/// Chargement des scripts et styles (Enqueue)
+	///
+
+	function e2d_v6_enqueue_assets() {
+		$theme_version = wp_get_theme()->get( 'Version' );
+
+		// Polices Google Fonts
+		wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=Poppins:500,700&display=swap', array(), null );
+
+		// Feuille de style principale
+		wp_enqueue_style( 'main-style', get_stylesheet_uri(), array(), $theme_version );
+
+		// Scripts JS
+		// WordPress inclut déjà jQuery, nous le déclarons comme dépendance.
+		// Le 'true' à la fin charge les scripts dans le footer pour de meilleures performances.
+		wp_enqueue_script( 'sparkles-js', get_template_directory_uri() . '/sparkles2.js', array('jquery'), $theme_version, false );
+		wp_enqueue_script( 'anime-js', get_template_directory_uri() . '/anime.js', array(), $theme_version, true );
+	}
+	add_action( 'wp_enqueue_scripts', 'e2d_v6_enqueue_assets' );
+
+	// Pré-connexion au domaine Google Fonts pour la performance
+	function e2d_v6_preconnect_google_fonts( $hints, $relation_type ) {
+		if ( 'preconnect' === $relation_type ) {
+			$hints[] = '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
+		}
+		return $hints;
+	}
+	add_filter( 'wp_resource_hints', 'e2d_v6_preconnect_google_fonts', 10, 2 );
 
 	///
 	/// Custom post
@@ -124,7 +159,7 @@
 			if ($item->attr_title === 'ico-fb') {
 				$output .= '<div id="RS"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-' . $item->ID . '">';
 				$output .= '<a href="' . $item->url . '" class="icon">';
-				$output .= '<img class="icon-svg" src="' . get_bloginfo('template_url') . '/imgs/ico_fb.svg" alt="Facebook">';
+				$output .= '<img class="icon-svg" src="' . esc_url(get_template_directory_uri()) . '/imgs/ico_fb.svg" alt="Facebook">';
 				$output .= '</a>';
 				$output .= '</li>';
 			}
@@ -132,7 +167,7 @@
 			elseif ($item->attr_title === 'ico-insta') {
 				$output .= '<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-' . $item->ID . '">';
 				$output .= '<a href="' . $item->url . '" class="icon">';
-				$output .= '<img class="icon-svg" src="' . get_bloginfo('template_url') . '/imgs/ico_ig.svg" alt="Instagram">';
+				$output .= '<img class="icon-svg" src="' . esc_url(get_template_directory_uri()) . '/imgs/ico_ig.svg" alt="Instagram">';
 				$output .= '</a>';
 				$output .= '</li></div>';
 			} else {
