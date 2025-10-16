@@ -49,7 +49,10 @@
     <main <?php body_class();?>>
 
         <?php
+
+
 // Mode message
+
 if (get_option('message_site_actif', false)) :
 	$message_site_titre = get_option('message_site_titre', '');
 	$message_site_texte_court = get_option('message_site_texte_court', '');

@@ -11,9 +11,9 @@
         <!-- TEMPLATE HOME -->
         <!------------------->
 
-        <?php if (is_page('les-cours') || is_page('stage')) {  
+        <?php if (is_page('les-cours')) {  
 
-                    get_template_part('template-custom-cours-stages'); 
+                    get_template_part('template-cours'); 
 
                 } else { ?>
 
