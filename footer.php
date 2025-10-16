@@ -41,10 +41,10 @@ if (current_user_can('manage_options') && wp_is_mobile() === false) { ?>
         </div>
     </div>
 
-    	    <div id="footer_groupe" class="bloc_footer">
-    	        <p class="footer_title">Les cours de danse collectif en groupe :</p>
-    	        <div class="footer_list">
-    	            <?php
+    <div id="footer_groupe" class="bloc_footer">
+        <p class="footer_title text-medium">Les cours de danse collectif en groupe :</p>
+        <div class="footer_list">
+            <?php
                     $cours_query = new WP_Query(array(
                         'post_type' => 'cours',
                         'posts_per_page' => -1,
@@ -55,22 +55,22 @@ if (current_user_can('manage_options') && wp_is_mobile() === false) { ?>
                     if ($cours_query->have_posts()) :
                         while ($cours_query->have_posts()) : $cours_query->the_post();
                     ?>
-    	            <h4>
-    	                <a href="<?php the_permalink(); ?>"><?php the_title();?><span
-    	                        class="subtitle"><?php if( get_field( 'sous_titre' ) ): the_field('sous_titre'); endif; ?></span></a>
-    	            </h4>
-    	            <?php
+            <h4>
+                <a href="<?php the_permalink(); ?>"><?php the_title();?><span
+                        class="subtitle"><?php if( get_field( 'sous_titre' ) ): the_field('sous_titre'); endif; ?></span></a>
+            </h4>
+            <?php
                         endwhile;
                         wp_reset_postdata();
                     endif;
                     ?>
-    	        </div>
-    	    </div>
-    
-    	    <div id="footer_stages" class="bloc_footer">
-    	        <p class="footer_title">Tous les stages de 2023 (atelier ou workshop) :</p>
-    	        <div class="footer_list">
-    	            <?php
+        </div>
+    </div>
+
+    <div id="footer_stages" class="bloc_footer">
+        <p class="footer_title text-medium">Tous les stages de 2023 (atelier ou workshop) :</p>
+        <div class="footer_list">
+            <?php
                     $stages_query = new WP_Query(array(
                         'post_type' => 'stages',
                         'posts_per_page' => -1,
@@ -81,19 +81,19 @@ if (current_user_can('manage_options') && wp_is_mobile() === false) { ?>
                     if ($stages_query->have_posts()) :
                         while ($stages_query->have_posts()) : $stages_query->the_post();
                     ?>
-    	            <h4>
-    	                <a href="<?php the_permalink(); ?>"><?php the_title();?><span
-    	                        class="subtitle"><?php if( get_field( 'sous_titre' ) ): the_field('sous_titre'); endif; ?></span></a>
-    	            </h4>
-    	            <?php
+            <h4>
+                <a href="<?php the_permalink(); ?>"><?php the_title();?><span
+                        class="subtitle"><?php if( get_field( 'sous_titre' ) ): the_field('sous_titre'); endif; ?></span></a>
+            </h4>
+            <?php
                         endwhile;
                         wp_reset_postdata();
                     endif;
                     ?>
-    	        </div>
-    	    </div>
+        </div>
+    </div>
     <div id="footer_geo" class="bloc_footer">
-        <p class="footer_title">Zone géographique :</p>
+        <p class="footer_title text-medium">Zone géographique :</p>
         <div class="footer_list">
             <h4>Villeneuve d'Ascq</h4>
             <h4>Roubaix</h4>

@@ -37,21 +37,26 @@ function afficher_contenu_activestages() {
 
     $activer_stages_site = get_option('activer_stages_site', false);
     ?>
-    <div class="wrap">
-        <h1 style="margin-bottom:40px;"><?php echo esc_html(get_admin_page_title()); ?></h1>
-        <form method="post" action="">
-            <?php wp_nonce_field('enregistrer_activestages', 'activestages_nonce'); ?>
-            <p>Lorsque les stages <b>sont activés</b>, les boutons "Voir les stages" apparaissent, ainsi que dans le menu</p>
-            <p style="margin-bottom:40px;">Lorsque les stages <b>sont désactivés</b>, les boutons "Voir les stages" ne sont plus affichés, et les stages n'apparaissent pas dans le menu</p>
-                <label for="activer_stages_site">
-                <input type="checkbox" id="activer_stages_site" name="activer_stages_site" <?php checked($activer_stages_site, true); ?>>
-                Afficher les stages sur le site
-            </label>
-            <?php submit_button('Enregistrer'); ?>
-            <p style="margin-top:40px; padding:16px; border:1px solid red; color:red; display:inline-block; border-radius:4px;">Note : pensez à retirer l'entrée dans le menu</p>
-        </form>
-    </div>
-    <?php
+<div class="wrap">
+    <h1 style="margin-bottom:40px;"><?php echo esc_html(get_admin_page_title()); ?></h1>
+    <form method="post" action="">
+        <?php wp_nonce_field('enregistrer_activestages', 'activestages_nonce'); ?>
+        <p>Lorsque les stages <b>sont activés</b>, les boutons "Voir les stages" apparaissent, ainsi que dans le menu
+        </p>
+        <p style="margin-bottom:40px;">Lorsque les stages <b>sont désactivés</b>, les boutons "Voir les stages" ne sont
+            plus affichés, et les stages n'apparaissent pas dans le menu</p>
+        <label for="activer_stages_site">
+            <input type="checkbox" id="activer_stages_site" name="activer_stages_site"
+                <?php checked($activer_stages_site, true); ?>>
+            Afficher les stages sur le site
+        </label>
+        <?php submit_button('Enregistrer'); ?>
+        <p
+            style="margin-top:40px; padding:16px; border:1px solid red; color:red; display:inline-block; border-radius:4px;">
+            Note : pensez à retirer l'entrée dans le menu</p>
+    </form>
+</div>
+<?php
 }
 
 // Fonction pour obtenir l'émoticône en fonction de l'état de la checkbox
