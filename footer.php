@@ -11,13 +11,24 @@ if (current_user_can('manage_options') && wp_is_mobile() === false) { ?>
 <footer>
 
     <div class="bloc_footer">
-        <?php $menu_location = 'contact_footerV6';
+        <?php 
+        // Ajoute la classe 'flex-basic' aux li du menu
+        function add_flex_basic_class_to_li($classes, $item, $args) {
+            if ($args->theme_location == 'contact_footerV6' || $args->theme_location == 'lien_footerV6') {
+                $classes[] = 'flex-basic';
+            }
+            return $classes;
+        }
+        add_filter('nav_menu_css_class', 'add_flex_basic_class_to_li', 10, 3);
+
+        $menu_location = 'contact_footerV6';
 		if (has_nav_menu($menu_location)) {
 			$menu_args = array(
 				'theme_location' => $menu_location,
 				'container' => 'nav',
 				'menu_id' => 'contact_footer_menu',
 			);
+
 		wp_nav_menu($menu_args);
 		} ?>
     </div>
@@ -134,6 +145,10 @@ if (is_user_logged_in() && current_user_can('administrator')) {
 		wp_nav_menu($menu_args);
 	}
 }
+?>
+        <?php 
+    // Supprime le filtre pour ne pas affecter d'autres menus
+    remove_filter('nav_menu_css_class', 'add_flex_basic_class_to_li', 10, 3);
 ?>
 
     </div>

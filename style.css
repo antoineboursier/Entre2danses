@@ -266,6 +266,22 @@ Version: V6
   padding-bottom: var(--size-l);
 }
 
+.flex-basic {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.flex-basic.col {
+  flex-direction: column;
+}
+
+.flex-basic.wrap {
+  flex-wrap: wrap;
+}
+
 @font-face {
   font-family: "Abrashe";
   src: url("imgs/Abrashe.woff2") format("woff2"),
@@ -623,9 +639,6 @@ header.header .menu-icon {
   border-radius: var(--radius-l);
   height: var(--size-xxxl);
   width: var(--size-xxxl);
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .header .menu-btn:checked ~ .menu-icon {
@@ -1043,9 +1056,6 @@ footer div.bloc_footer {
 
 footer nav li {
   display: inline-flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
   background: var(--bg_medium);
   border: 2px solid var(--text_body);
   outline: 2px solid transparent;

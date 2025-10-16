@@ -109,7 +109,7 @@
 			// Vérifier si l'élément a l'attribut title "ico-fb" pour en faire une icône SVG personnalisée
 			if ($item->attr_title === 'ico-fb') {
 				$output .= '<div id="RS"><li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-' . $item->ID . '">';
-				$output .= '<a href="' . $item->url . '" class="icon">';
+				$output .= '<a href="' . $item->url . '" class="icon flex-basic">';
 				$output .= '<img class="icon-svg" src="' . esc_url(get_template_directory_uri()) . '/imgs/ico_fb.svg" alt="Facebook">';
 				$output .= '</a>';
 				$output .= '</li>';
@@ -117,7 +117,7 @@
 			// Vérifier si l'élément a l'attribut title "ico-insta" pour en faire une icône SVG personnalisée
 			elseif ($item->attr_title === 'ico-insta') {
 				$output .= '<li class="menu-item menu-item-type-custom menu-item-object-custom menu-item-' . $item->ID . '">';
-				$output .= '<a href="' . $item->url . '" class="icon">';
+				$output .= '<a href="' . $item->url . '" class="icon flex-basic">';
 				$output .= '<img class="icon-svg" src="' . esc_url(get_template_directory_uri()) . '/imgs/ico_ig.svg" alt="Instagram">';
 				$output .= '</a>';
 				$output .= '</li></div>';
