@@ -25,36 +25,6 @@
 	));	
 
 	///
-	/// Chargement des scripts et styles (Enqueue)
-	///
-
-	function e2d_v6_enqueue_assets() {
-		$theme_version = wp_get_theme()->get( 'Version' );
-
-		// Polices Google Fonts
-		wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=Poppins:500,700&display=swap', array(), null );
-
-		// Feuille de style principale
-		wp_enqueue_style( 'main-style', get_stylesheet_uri(), array(), $theme_version );
-
-		// Scripts JS
-		// WordPress inclut déjà jQuery, nous le déclarons comme dépendance.
-		// Le 'true' à la fin charge les scripts dans le footer pour de meilleures performances.
-		wp_enqueue_script( 'sparkles-js', get_template_directory_uri() . '/sparkles2.js', array('jquery'), $theme_version, false );
-		wp_enqueue_script( 'anime-js', get_template_directory_uri() . '/anime.js', array(), $theme_version, true );
-	}
-	add_action( 'wp_enqueue_scripts', 'e2d_v6_enqueue_assets' );
-
-	// Pré-connexion au domaine Google Fonts pour la performance
-	function e2d_v6_preconnect_google_fonts( $hints, $relation_type ) {
-		if ( 'preconnect' === $relation_type ) {
-			$hints[] = '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
-		}
-		return $hints;
-	}
-	add_filter( 'wp_resource_hints', 'e2d_v6_preconnect_google_fonts', 10, 2 );
-
-	///
 	/// Custom post
 	///
 	
@@ -129,25 +99,6 @@
 		register_post_type( 'stages', $args );
 	}
 	add_action( 'init', 'custom_post_type_stages', 0 );
-	
-	///
-	/// Attribuer le template aux custom pages
-	///
-
-	function custom_post_template($template) {
-		global $post;
-	
-		if (is_singular('stages') || is_singular('cours')) {
-			$new_template = locate_template(array('single-custompost.php'));
-	
-			if (!empty($new_template)) {
-				return $new_template;
-			}
-		}
-	
-		return $template;
-	}
-	add_filter('single_template', 'custom_post_template');
 
 	///
 	/// Icone FB et insta menu
@@ -218,6 +169,36 @@
 	require 'functions-btn-inscription.php';
 	require 'functions-message.php';
 	require 'functions-activestage.php';
+
+	///
+	/// Chargement des scripts et styles (Enqueue)
+	///
+
+	function e2d_v6_enqueue_assets() {
+		$theme_version = wp_get_theme()->get( 'Version' );
+
+		// Polices Google Fonts
+		wp_enqueue_style( 'google-fonts', 'https://fonts.googleapis.com/css?family=Poppins:500,700&display=swap', array(), null );
+
+		// Feuille de style principale
+		wp_enqueue_style( 'main-style', get_stylesheet_uri(), array(), $theme_version );
+
+		// Scripts JS
+		// WordPress inclut déjà jQuery, nous le déclarons comme dépendance.
+		// Le 'true' à la fin charge les scripts dans le footer pour de meilleures performances.
+		wp_enqueue_script( 'sparkles-js', get_template_directory_uri() . '/sparkles2.js', array('jquery'), $theme_version, false );
+		wp_enqueue_script( 'anime-js', get_template_directory_uri() . '/anime.js', array(), $theme_version, true );
+	}
+	add_action( 'wp_enqueue_scripts', 'e2d_v6_enqueue_assets' );
+
+	// Pré-connexion au domaine Google Fonts pour la performance
+	function e2d_v6_preconnect_google_fonts( $hints, $relation_type ) {
+		if ( 'preconnect' === $relation_type ) {
+			$hints[] = '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>';
+		}
+		return $hints;
+	}
+	add_filter( 'wp_resource_hints', 'e2d_v6_preconnect_google_fonts', 10, 2 );
 
 
 	
